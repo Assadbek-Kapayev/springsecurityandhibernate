@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration and Login App</title>
+
+</head>
+<body>
+<!-- create navigation bar ( header) -->
+<div>
+    <ul class="nav navbar-nav">
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+    </ul>
+</div>
+
+<br>
+<br>
+
+<div style="background-color: lightgray" th:each="user : ${users}">
+    <p th:text="${user.getId() + ', ' + user.getFirstName() + ', ' + user.getLastName() + ', ' + user.getEmail()}"></p>
+    <a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a>
+    <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+        <input type="submit" value="Delete"/>
+    </form>
+</div>
+
+<br>
+<br>
+
+<a href="/users/new">Create new person</a>
+</body>
+</html>
